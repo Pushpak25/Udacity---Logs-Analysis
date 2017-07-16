@@ -9,10 +9,10 @@ This project is a part of Udacity Full Stack Nanodegree. In this project, we bui
 
 You will need:
 <br/>
-Python - 2.X
-Vagrant
-VirtualBox
-Setup
+Python - 2.X <br/>
+Vagrant <br/>
+VirtualBox <br/>
+
 <br/>
 Vagrant virtual machine is required for this project which you can find here: https://github.com/udacity/fullstack-nanodegree-vm 
 <br/>
