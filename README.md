@@ -17,7 +17,7 @@ VirtualBox <br/>
 Vagrant virtual machine is required for this project which you can find here: https://github.com/udacity/fullstack-nanodegree-vm 
 <br/>
 First, fork the fullstack-nanodegree-vm repository so that you have a version of your own within your Github account. Next clone your fullstack-nanodegree-vm repo to your local machine. 
-To use the Vagrant virtual machine, navigate to the full-stack-nanodegree-vm/tournament directory in the terminal, then use the command ```vagrant up (powers on the virtual machine)``` followed by ```vagrant ssh (logs into the virtual machine)```.
+To use the Vagrant virtual machine, navigate to the full-stack-nanodegree-vm/tournament directory in the terminal, then use the command ```vagrant up``` (powers on the virtual machine) followed by ```vagrant ssh``` (logs into the virtual machine).
 <br/>
 
 To load the data, use the command ```psql -d news -f newsdata.sql``` to connect a database and run the necessary SQL statements.
