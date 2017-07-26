@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import psycopg2
 
 
@@ -30,7 +32,7 @@ def print_output(results, ext):
 # Most popular three articles of all time:
 query_1 = (
     "select articles.title, count(*) as num_views from articles \
-    inner join log on log.path like concat('%',articles.slug,'%') \
+    inner join log on log.path = concat('/article/', articles.slug) \
     group by articles.title, log.path order by num_views desc limit 3"
 )
 
@@ -38,21 +40,24 @@ query_1 = (
 query_2 = (
     "select authors.name, count(*) as num_views from articles \
     inner join authors on authors.id= articles.author \
-    inner join log on log.path like concat('%',articles.slug,'%') \
+    inner join log on log.path = concat('/article/', articles.slug) \
     group by authors.name, log.path order by num_views desc limit 4"
 )
 
 # Days with more than 1% failed requests
 
 query_3 = (
-    "select day,per_errors from ( \
-    select day, round((sum(requests)/(select count(1) from log \
-    where date(log.time) = day) * 100), 2) as per_errors from ( \
-    select date(log.time) as day, count(1) as requests \
-    from log where status like '%404%' \
-    group by day) as per_logs \
-    group by day order by per_errors desc) \
-    as query_3 where per_errors > 1;"
+    "select to_char(a.date, 'Mon DD, YYYY'), \
+    round(a.errors * 100.0 / b.requests, 2) \
+       from (select time::date as date, count(*) as errors \
+             from log \
+             where status != '200 OK' \
+             group by date) as a, \
+            (select time::date as date, count(*) as requests \
+             from log \
+             group by date) as b \
+       where a.date = b.date \
+       and (a.errors * 100.0 / b.requests) >= 1;"
 )
 
 if __name__ == '__main__':
